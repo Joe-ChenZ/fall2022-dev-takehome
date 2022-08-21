@@ -1,32 +1,55 @@
-import React from 'react'
-/**
- * Thank you for applying to Bits of Good. You are free to add/delete/modify any 
- * parts of this project. That includes changing the types.ts, creating css files, 
- * modifying import statements, using contexts, etc. We do recommend to keep it simple. 
- * You will not be judged based on complexity. We also recommend using 
- * multiple components instead of coding everything on this file :)
- * 
- * Have fun! Please reach out to hello@bitsofgood.org or amz@gatech.edu if you
- * have any questions!
- * 
- * Bits of Good Engineering Team
- * 
- */
-// TODO: Start coding from here
-
-// Here's a baseline todo item type. 
-// Feel free to extend or create your own interface!
-export type TodoItem = {
-  title: string,
-  dueDate: Date,
-  tagList: string[],
-  completed: boolean,
-}
+import React, { useState } from 'react';
+import TodoForm from './TodoForm';
+import Todo from './Todo';
+import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType} from './TodoTypes';
 
 export default function TodoList() {
+  const [todos, setTodos] = useState<TodoItem[]>([]);
+
+  const addTodo = (todo:TodoItem) => {
+    if(!todo.text || /^\s*$/.test(todo.text)) {
+      return ;
+    }
+
+    const newTodos = [todo, ...todos];
+    setTodos(newTodos);
+    console.log(...newTodos);
+  };
+
+  const updateTodo: UpdateTodoType = (todoId: number | null, newValue: TodoItem) => {
+    if(!newValue.text || /^\s*$/.test(newValue.text)) {
+      return;
+    }
+
+    setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
+  }
+
+  const removeTodo: RemoveTodoType = (id: number | null) => {
+    const removeArr = [...todos].filter(todo => todo.id !== id);
+    setTodos(removeArr);
+  };
+
+  const completeTodo: CompleteTodoType = (id: number | null) => {
+    let updatedTodos = todos.map(todo => {
+      if (todo.id === id) {
+        todo.isComplete = !todo.isComplete
+      }
+      return todo;
+    })
+    setTodos(updatedTodos);
+  };
+
   return (
     <div>
-      <h3>Todo List!</h3>
+      <h1>What's the plan for today</h1>
+      <TodoForm onSubmit={addTodo}></TodoForm>
+
+      <Todo 
+        todos={todos} 
+        completeTodo={completeTodo}
+        removeTodo={removeTodo}
+        updateTodo={updateTodo}
+      />
     </div>
-  )
+  );
 }
