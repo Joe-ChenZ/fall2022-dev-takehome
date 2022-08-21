@@ -26,30 +26,60 @@ function TodoForm(props:any) {
     };
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
-          {props.edit ? (
+            {props.edit ? (
             <>
-              <input
-                placeholder='Update your item'
-                value={input}
-                onChange={handleChange}
-                name='text'
-                ref={inputRef}
-                className='todo-input edit'
-              />
-              <button onClick={handleSubmit} className='todo-button edit'>
-                Update
-              </button>
+                <div className='todo-container'>
+                    <input 
+                        placeholder='Item title'
+                        value={input}
+                        onChange={handleChange}
+                        name='title'
+                        ref={inputRef}
+                        className='todo-input edit'
+                    />
+                </div>
+                <div>
+
+                </div>
+                <div className='todo-container'>
+                    <input
+                        placeholder='Item tag'
+                        name='tag'
+                    
+                    />
+                </div>
+              
+                <button onClick={handleSubmit} className='todo-button edit'>
+                    Update
+                </button>
             </>
           ) : (
             <>
-              <input
-                placeholder='Add a todo'
-                value={input}
-                onChange={handleChange}
-                name='text'
-                className='todo-input'
-                ref={inputRef}
-              />
+                <div className='todo-container'>
+                    <label>Title</label>
+                    <input
+                    placeholder='Add a todo'
+                    value={input}
+                    onChange={handleChange}
+                    name='itemTitle'
+                    className='todo-input'
+                    ref={inputRef}
+                    />
+
+                </div>
+                
+                <div className='todo-container'>
+                    <label>Tag</label>
+                    <input
+                        placeholder='Enter your item tag'
+                        name='tag'
+                        className='todo-input'
+                    />
+                    <button className='todo-button'>
+                        Create New Tag
+                    </button>
+                </div>
+              
               <button onClick={handleSubmit} className='todo-button'>
                 Add todo
               </button>
