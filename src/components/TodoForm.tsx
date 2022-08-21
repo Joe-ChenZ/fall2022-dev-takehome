@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import Form from 'react-bootstrap/Form';
 function TodoForm(props:any) {
     const [input, setInput] = useState('');
 
@@ -38,14 +38,10 @@ function TodoForm(props:any) {
                         className='todo-input edit'
                     />
                 </div>
-                <div>
-
-                </div>
                 <div className='todo-container'>
                     <input
                         placeholder='Item tag'
                         name='tag'
-                    
                     />
                 </div>
               
@@ -56,7 +52,7 @@ function TodoForm(props:any) {
           ) : (
             <>
                 <div className='todo-container'>
-                    <label>Title</label>
+                    <label className='todo-label'>Title</label>
                     <input
                     placeholder='Add a todo'
                     value={input}
@@ -69,7 +65,7 @@ function TodoForm(props:any) {
                 </div>
                 
                 <div className='todo-container'>
-                    <label>Tag</label>
+                    <label className='todo-label'>Tag</label>
                     <input
                         placeholder='Enter your item tag'
                         name='tag'
@@ -78,6 +74,11 @@ function TodoForm(props:any) {
                     <button className='todo-button'>
                         Create New Tag
                     </button>
+                </div>
+
+                <div className='todo-container'>
+                    <label className='todo-label'>Due Date</label>
+                    <Form.Control type="date" name='dueDate' className='todo-due-date'/>
                 </div>
               
               <button onClick={handleSubmit} className='todo-button'>

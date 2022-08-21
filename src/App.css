@@ -45,7 +45,8 @@ h1 {
 .todo-input {
   padding: 14px 16px 14px 16px;
   border-radius: 4px 0 0 4px;
-  border: 2px solid #5d0cff;
+  border: 4px solid #5d0cff;
+  border-radius: 10px;
   outline: none;
   width: 320px;
   background: transparent;
@@ -64,7 +65,7 @@ h1 {
 .todo-button {
   padding: 16px;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   cursor: pointer;
   outline: none;
   background: linear-gradient(
@@ -77,7 +78,8 @@ h1 {
 }
 
 .todo-input.edit {
-  border: 2px solid #149fff;
+  border: 4px solid #149fff;
+  border-radius: 10px;
 }
 
 .todo-button.edit {
@@ -92,10 +94,27 @@ h1 {
 .todo-container {
   display: flex;
   flex-direction: row;
-  margin: 16px;
-  padding: 16px;
+  margin: 8px;
+  padding: 8px;
   position: relative;
   justify-content: center;
+  align-self: center;
+}
+
+.todo-label {
+  margin: 4px;
+  padding: 4px;
+  align-self: center;
+}
+
+.todo-due-date {
+  border-radius: 10px;
+  border-color: #161a2b;
+  scale: 120%;
+  margin: 8px;
+  padding: 8px;
+  margin-left: 32px;
+  min-height: 32px;
 }
 
 .todo-row {
