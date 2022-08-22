@@ -8,13 +8,18 @@ export default function TodoList() {
 
   const [tags, setTags] = useState<Tag[]>([]);
 
+  // --------------------- todo functions ----------------------
+
   const addTodo = (todo: TodoItem) => {
     if(!todo.title || /^\s*$/.test(todo.title)) {
       return ;
     }
 
     // if due date is not set, send a warning pop-up window
-
+    // if (!date) {
+    //   console.log("date is empty");
+      
+    // }
     const newTodos = [todo, ...todos];
     setTodos(newTodos);
     // console.log(...newTodos);
@@ -27,20 +32,6 @@ export default function TodoList() {
 
     setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
   }
-
-  const addTag = (tag: Tag | null) => {
-    if (!tag) {
-      return;
-    }
-    const newTags = [...tags, tag];
-    console.log(newTags);
-    setTags(newTags);
-  }
-
-  const removeTag = (id: number | null) => {
-    const removeArr = [...tags].filter(tag => tag.id !== id);
-    setTags(removeArr);
-  };
 
   const removeTodo: RemoveTodoType = (id: number | null) => {
     const removeArr = [...todos].filter(todo => todo.id !== id);
@@ -57,16 +48,38 @@ export default function TodoList() {
     setTodos(updatedTodos);
   };
 
-  console.log(tags);
+  // --------------------- tag functions ----------------------
 
-  if (tags.length > 0) {
-    console.log(tags[0]);
+  const addTag = (tag: Tag | null) => {
+    if (!tag) {
+      return;
+    }
+    const newTags = [...tags, tag];
+    console.log(newTags);
+    setTags(newTags);
   }
+
+  const removeTag = (id: number | null) => {
+    const removeArr = [...tags].filter(tag => tag.id !== id);
+    setTags(removeArr);
+  };
+
+  // --------------------- due date functions ----------------------
+
+  // const addDueDate = (date: Date | null) => {
+  //   if (!date) {
+  //     return;
+  //   }
+
+  //   setDate(date);
+  // }
+
 
   return (
     <div>
       <TodoForm 
-        tags={[...tags]}
+        tags={tags}
+        // date={date}
         addTodo={addTodo}
         addTag={addTag}
         removeTag={removeTag}

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {RiCloseCircleLine} from 'react-icons/ri';
 import {TiEdit} from 'react-icons/ti';
 import TodoForm from './TodoForm';
-import {TodoItem, CompleteTodoType, RemoveTodoType, UpdateTodoType} from './TodoTypes';
+import {TodoItem, CompleteTodoType, RemoveTodoType, UpdateTodoType, Tag} from './TodoTypes';
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     todos: TodoItem[],
     completeTodo: CompleteTodoType, 
@@ -22,34 +22,58 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
         });
     }
 
-    if (edit.id) {
-        return <TodoForm 
-            edit={edit} 
-            addTodo={submitUpdate}
-            addTag={undefined} 
-            removeTag={undefined}
-            tags={[]}
-            />
-    }
+    // if (edit.id) {
+    //     return <TodoForm 
+    //         edit={edit} 
+    //         date={}
+    //         addTodo={submitUpdate}
+    //         addTag={undefined} 
+    //         removeTag={undefined}
+    //         tags={[]}
+    //         />
+    // }
     return (
         <>
             {todos.map((todo: TodoItem, index: number) => (
-            <div 
-                className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
-                key={index}>
-                <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-                    {todo.title}
-                </div>
-                <div className="icons">
-                    <RiCloseCircleLine 
-                        onClick={(() => removeTodo(todo.id))}
-                        className='delete-icon'/>
-                    <TiEdit 
-                        onClick={(() => setEdit({id: todo.id, value: todo.title}))}
-                        className='edit-icon'/>
-                </div>
-            </div>
+            <>
+                <div className='tag-container'>
             
+                    {todo.tagList.map((tag: Tag) => (
+                        <div key={tag.id} className='displayed-tag-box'>
+                            {tag.tag}
+                        </div>
+                    ))}
+                    
+                </div>
+                
+                <div 
+                    className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+                    key={index}>
+                    
+                        
+                    <div key={todo.id} onClick={() => completeTodo(todo.id)}>
+                        {todo.title}
+                    </div>
+
+                    <div>
+                        <text> 
+                            Due: {todo.dueDate}
+                        </text>
+
+                        <div className="icons">
+                            <RiCloseCircleLine 
+                                onClick={(() => removeTodo(todo.id))}
+                                className='delete-icon'/>
+                            <TiEdit 
+                                onClick={(() => setEdit({id: todo.id, value: todo.title}))}
+                                className='edit-icon'/>
+                        </div>
+                    </div>
+                    
+
+                    
+                </div>
+            </>
             ))}
         </>
     )
