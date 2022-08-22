@@ -1,28 +1,46 @@
 import React, { useState } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
-import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType} from './TodoTypes';
+import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, Tag} from './TodoTypes';
 
 export default function TodoList() {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
-  const addTodo = (todo:TodoItem) => {
-    if(!todo.text || /^\s*$/.test(todo.text)) {
+  const [tags, setTags] = useState<Tag[]>([]);
+
+  const addTodo = (todo: TodoItem) => {
+    if(!todo.title || /^\s*$/.test(todo.title)) {
       return ;
     }
 
+    // if due date is not set, send a warning pop-up window
+
     const newTodos = [todo, ...todos];
     setTodos(newTodos);
-    console.log(...newTodos);
+    // console.log(...newTodos);
   };
 
   const updateTodo: UpdateTodoType = (todoId: number | null, newValue: TodoItem) => {
-    if(!newValue.text || /^\s*$/.test(newValue.text)) {
+    if(!newValue.title || /^\s*$/.test(newValue.title)) {
       return;
     }
 
     setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
   }
+
+  const addTag = (tag: Tag | null) => {
+    if (!tag) {
+      return;
+    }
+    const newTags = [...tags, tag];
+    console.log(newTags);
+    setTags(newTags);
+  }
+
+  const removeTag = (id: number | null) => {
+    const removeArr = [...tags].filter(tag => tag.id !== id);
+    setTags(removeArr);
+  };
 
   const removeTodo: RemoveTodoType = (id: number | null) => {
     const removeArr = [...todos].filter(todo => todo.id !== id);
@@ -39,11 +57,20 @@ export default function TodoList() {
     setTodos(updatedTodos);
   };
 
+  console.log(tags);
+
+  if (tags.length > 0) {
+    console.log(tags[0]);
+  }
+
   return (
     <div>
       <TodoForm 
-        onSubmit={addTodo}
-        
+        tags={[...tags]}
+        addTodo={addTodo}
+        addTag={addTag}
+        removeTag={removeTag}
+        edit={0}
       />
 
       <Todo 
@@ -51,6 +78,7 @@ export default function TodoList() {
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         updateTodo={updateTodo}
+        // addTag={}
       />
     </div>
   );

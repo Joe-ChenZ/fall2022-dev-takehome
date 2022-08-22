@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
-function TodoForm(props:any) {
-    const [input, setInput] = useState('');
+import { RiCloseCircleLine } from 'react-icons/ri';
+import { AddTodoType, AddTagType, Tag } from './TodoTypes';
+
+function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
+    tags: Tag[],
+    addTodo: AddTodoType,
+    addTag: any,
+    removeTag: any,
+    edit: any
+}) {
+    const [toDoInput, setTodoInput] = useState('');
+    const [tagInput, setTagInput] = useState('');
 
     const inputRef = useRef<any>(null);
     
@@ -12,26 +22,46 @@ function TodoForm(props:any) {
     });
 
     const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        setInput(e.target.value);
+        setTodoInput(e.target.value);
     }
+
+    const handleTagChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+        setTagInput(e.target.value);
+    }
+
+    const handleTagSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        addTag({
+            id: Math.floor(Math.random()*10000),  // could use uuid
+            tag: tagInput
+        });
+
+        setTagInput('');
+    };
+
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        props.onSubmit({
-            id: Math.floor(Math.random()*10000), 
-            text: input
+        addTodo({
+            id: Math.floor(Math.random()*10000),  // could use uuid
+            title: toDoInput,
+            dueDate: new Date(),
+            tagList: tags,
+            isComplete: false,
         });
 
-        setInput('');
+        setTodoInput('');
     };
+
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
-            {props.edit ? (
+            {edit ? (
             <>
                 <div className='todo-container'>
                     <input 
                         placeholder='Item title'
-                        value={input}
+                        value={toDoInput}
                         onChange={handleChange}
                         name='title'
                         ref={inputRef}
@@ -54,12 +84,12 @@ function TodoForm(props:any) {
                 <div className='todo-container'>
                     <label className='todo-label'>Title</label>
                     <input
-                    placeholder='Add a todo'
-                    value={input}
-                    onChange={handleChange}
-                    name='itemTitle'
-                    className='todo-input'
-                    ref={inputRef}
+                        placeholder='Add a todo'
+                        value={toDoInput}
+                        onChange={handleChange}
+                        name='itemTitle'
+                        className='todo-input'
+                        ref={inputRef}
                     />
 
                 </div>
@@ -69,11 +99,35 @@ function TodoForm(props:any) {
                     <input
                         placeholder='Enter your item tag'
                         name='tag'
+                        value={tagInput}
+                        onChange={handleTagChange}
                         className='todo-input'
+                        ref={inputRef}
                     />
-                    <button className='todo-button'>
+                    <button className='todo-button' onClick={handleTagSubmit}>
                         Create New Tag
                     </button>
+                </div>
+
+                <div className='tag-container'>
+                    
+                    {tags.map((tag: Tag) => (
+                        <div className='tag-box'>
+                            <div key={tag.id}>
+                                {tag.tag}
+                            </div>
+
+                            <div className="icons">
+                                <RiCloseCircleLine 
+                                    className='delete-icon'
+                                    onClick={(() => removeTag(tag.id))}
+                                />
+                            </div>
+                        </div>
+                    ))}
+                        
+                        
+                    
                 </div>
 
                 <div className='todo-container'>
@@ -81,9 +135,9 @@ function TodoForm(props:any) {
                     <Form.Control type="date" name='dueDate' className='todo-due-date'/>
                 </div>
               
-              <button onClick={handleSubmit} className='todo-button'>
-                Add todo
-              </button>
+                <button onClick={handleSubmit} className='todo-button'>
+                    Add todo
+                </button>
             </>
           )}
         </form>

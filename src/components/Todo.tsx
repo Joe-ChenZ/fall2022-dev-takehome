@@ -4,7 +4,7 @@ import {TiEdit} from 'react-icons/ti';
 import TodoForm from './TodoForm';
 import {TodoItem, CompleteTodoType, RemoveTodoType, UpdateTodoType} from './TodoTypes';
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
-    todos:TodoItem[], 
+    todos: TodoItem[],
     completeTodo: CompleteTodoType, 
     removeTodo: RemoveTodoType, 
     updateTodo: UpdateTodoType}) => {
@@ -23,29 +23,36 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     }
 
     if (edit.id) {
-        return <TodoForm edit={edit} onSubmit={submitUpdate} />
+        return <TodoForm 
+            edit={edit} 
+            addTodo={submitUpdate}
+            addTag={undefined} 
+            removeTag={undefined}
+            tags={[]}
+            />
     }
     return (
         <>
-        {todos.map((todo: TodoItem, index: number) => (
-        <div 
-            className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
-            key={index}>
-            <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-                {todo.text}
+            {todos.map((todo: TodoItem, index: number) => (
+            <div 
+                className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+                key={index}>
+                <div key={todo.id} onClick={() => completeTodo(todo.id)}>
+                    {todo.title}
+                </div>
+                <div className="icons">
+                    <RiCloseCircleLine 
+                        onClick={(() => removeTodo(todo.id))}
+                        className='delete-icon'/>
+                    <TiEdit 
+                        onClick={(() => setEdit({id: todo.id, value: todo.title}))}
+                        className='edit-icon'/>
+                </div>
             </div>
-            <div className="icons">
-                <RiCloseCircleLine 
-                    onClick={(() => removeTodo(todo.id))}
-                    className='delete-icon'/>
-                <TiEdit 
-                    onClick={(() => setEdit({id: todo.id, value: todo.text}))}
-                    className='delete-icon'/>
-            </div>
-        </div>
-        
-    ))}
-    </>)
+            
+            ))}
+        </>
+    )
 };
 
 export default Todo;
