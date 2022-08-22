@@ -15,11 +15,6 @@ export default function TodoList() {
       return ;
     }
 
-    // if due date is not set, send a warning pop-up window
-    // if (!date) {
-    //   console.log("date is empty");
-      
-    // }
     const newTodos = [todo, ...todos];
     setTodos(newTodos);
     // console.log(...newTodos);
@@ -51,7 +46,7 @@ export default function TodoList() {
   // --------------------- tag functions ----------------------
 
   const addTag = (tag: Tag | null) => {
-    if (!tag) {
+    if (!tag || /^\s*$/.test(tag.tag)) {
       return;
     }
     const newTags = [...tags, tag];

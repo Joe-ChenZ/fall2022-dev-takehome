@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { AddTodoType, AddTagType, Tag } from './TodoTypes';
-
+import Alert from './AlertBox';
 function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
     tags: Tag[]
     addTodo: AddTodoType,
@@ -45,25 +45,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
         e.preventDefault();
         console.log(date == null);
         if (!date || !(date[0] <= '9' && date[0] >= '0')) {
-            return (
-                <div className="modal">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Modal title</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            )
+            return <Alert/>
         }
         addTodo({
             id: Math.floor(Math.random()*10000),  // could use uuid

@@ -131,7 +131,7 @@ h1 {
 
   padding: 16px;
   border-radius: 5px;
-  width: 90%;
+  width: 70%;
 }
 
 .todo-row:nth-child(8n + 3) {
