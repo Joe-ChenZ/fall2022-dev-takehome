@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
-import { AddTodoType, AddTagType, Tag } from './TodoTypes';
+import { AddTodoType, AddTagType, Tag, TodoItem } from './TodoTypes';
 import { useGlobalContext } from "../Context";
 // import AlertBox from './AlertBox';
 import Alert from 'react-bootstrap/Alert';
 
-function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
+function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit}: {
     tags: Tag[],
     // checkedTags: number[],
     // setSelectedTags: any,
     addTodo: AddTodoType,
     addTag: any,
     removeTag: any,
+    sortTodoByDate: any,
+    todos: TodoItem[],
     edit: any
 }) {
     const [toDoInput, setTodoInput] = useState('');
@@ -20,6 +22,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
     const [date, setDate] = useState<string | undefined>(undefined);
     const [show, setShow] = useState(false);
     const {checkedTags, setCheckedTags} = useGlobalContext();
+    const [stateButton, setStateButton] = useState(1);
     const inputRef = useRef<any>(null);
     
     // useEffect(() => {
@@ -66,28 +69,41 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
             );
         }
         
-        
     };
     // console.log(checkedTags);
     const handleSubmit = (e: { preventDefault: () => void; }) => {
-        setShow(false);
         e.preventDefault();
-        // console.log(date == null);
-        if (!date || !(date[0] <= '9' && date[0] >= '0')) {
-            setShow(true);
-            return;
+        console.log(stateButton);
+        // Add todo
+        if (stateButton === 1) {
+            setShow(false);
+        
+            // console.log(date == null);
+            if (!date || !(date[0] <= '9' && date[0] >= '0')) {
+                setShow(true);
+                return;
+            }
+            addTodo({
+                id: Math.floor(Math.random()*10000),  // could use uuid
+                title: toDoInput,
+                dueDate: date,
+                tagList: tags.filter((tag) => checkedTags.includes(tag.id.toString())),
+                isComplete: false,
+            });
+    
+            setTodoInput('');
+            setTagInput('');
+            setDate('');
         }
-        addTodo({
-            id: Math.floor(Math.random()*10000),  // could use uuid
-            title: toDoInput,
-            dueDate: date,
-            tagList: tags.filter((tag) => checkedTags.includes(tag.id.toString())),
-            isComplete: false,
-        });
 
-        setTodoInput('');
-        setTagInput('');
-        setDate('');
+        if (stateButton === 2) {
+            sortTodoByDate(todos);
+        }
+
+        if (stateButton === 3) {
+            ;
+        }
+        
     };
 
     return (
@@ -183,14 +199,22 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
                     <Form.Control 
                         type="date" 
                         name='dueDate' 
-                        className='todo-due-date'
+                        className='todo-due-date-box'
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                     />
                 </div>
-              
-                <button onClick={handleSubmit} className='todo-button'>
+                
+                <button name="btn1" onClick={() => setStateButton(1)} className='todo-button'>
                     Add todo
+                </button>
+
+                <button name="btn2" onClick={() => setStateButton(2)} className='todo-button'>
+                    Sort todo by date
+                </button>
+
+                <button name="btn3" onClick={() => setStateButton(3)} className='todo-button'>
+                    Sort todo by completeness
                 </button>
 
                 {(show) ? (

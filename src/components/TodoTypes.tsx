@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 export type TodoItem = {
-    dueDate: string | null,
+    dueDate: string,
     tagList: Tag[],
     isComplete: boolean,
     title:string,

@@ -36,15 +36,15 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     //         tags={[]}
     //         />
     // }
-    // const checkElements = document.querySelector('.form-check-input:checked').value;
-    // const checkedTags = checkElements?.ariaChecked;
-    todos.map((todo: TodoItem, index: number) => {
-        console.log(todo)
-        todo.tagList.map((tag: Tag) => (
-            console.log(checkedTags.includes(tag.id.toString()))
-        )
-    )})
-    console.log(checkedTags);
+    
+
+    // todos.map((todo: TodoItem, index: number) => {
+    //     console.log(todo)
+    //     todo.tagList.map((tag: Tag) => (
+    //         console.log(checkedTags.includes(tag.id.toString()))
+    //     )
+    // )})
+    // console.log(checkedTags);
     return (
         <>
             {todos.map((todo: TodoItem, index: number) => (
@@ -72,25 +72,24 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
                 <div 
                     className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
                     key={index}>
-                    
-                        
+                       
                     <div key={todo.id} onClick={() => completeTodo(todo.id)}>
                         {todo.title}
                     </div>
 
                     <div>
-                        <text> 
+                        <span className='todo-due-date-text'> 
                             Due: {todo.dueDate}
-                        </text>
+                        </span>
 
-                        <div className="icons">
+                        <span className="icons">
                             <RiCloseCircleLine 
                                 onClick={(() => removeTodo(todo.id))}
                                 className='delete-icon'/>
-                            <TiEdit 
+                            {/* <TiEdit 
                                 onClick={(() => setEdit({id: todo.id, value: todo.title}))}
-                                className='edit-icon'/>
-                        </div>
+                                className='edit-icon'/> */}
+                        </span>
                     </div>
                     
 

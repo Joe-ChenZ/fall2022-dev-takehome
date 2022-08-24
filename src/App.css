@@ -65,6 +65,7 @@ h1 {
 
 .todo-button {
   padding: 16px;
+  margin: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -108,7 +109,8 @@ h1 {
   align-self: center;
 }
 
-.todo-due-date {
+.todo-due-date-box {
+  display: flex;
   border-radius: 10px;
   border-color: #161a2b;
   scale: 120%;
@@ -116,6 +118,12 @@ h1 {
   padding: 8px;
   margin-left: 32px;
   min-height: 32px;
+}
+
+.todo-due-date-text {
+  display: flex;
+  border-radius: 10px;
+  border-color: #161a2b;
 }
 
 .todo-row {
@@ -199,8 +207,11 @@ h1 {
   color: black;
 }
 
+
+
 .icons {
   display: flex;
+  /* inline-size: auto; */
   align-items: center;
   font-size: 24px;
   cursor: pointer;

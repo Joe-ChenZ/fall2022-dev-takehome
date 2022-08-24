@@ -48,6 +48,17 @@ export default function TodoList() {
     setTodos(updatedTodos);
   };
 
+  const sortTodoByDate = (todos: TodoItem[]) => {
+    todos.sort(function(a, b) {
+        const dateA = a.dueDate;
+        const dateB = b.dueDate;
+        // if (!dateA || !dateB) {
+        //     if (date)
+        // }
+        return (dateA < dateB) ? -1 : 1;
+    })
+  }
+
   // --------------------- tag functions ----------------------
 
   const addTag = (tag: Tag | null) => {
@@ -83,6 +94,8 @@ export default function TodoList() {
         addTodo={addTodo}
         addTag={addTag}
         removeTag={removeTag}
+        sortTodoByDate={sortTodoByDate}
+        todos={todos}
         edit={0}
       />
 
@@ -91,7 +104,6 @@ export default function TodoList() {
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         updateTodo={updateTodo}
-        // checkedTags={checkedTags}
         // addTag={}
       />
     </div>
