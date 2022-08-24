@@ -81,7 +81,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
             id: Math.floor(Math.random()*10000),  // could use uuid
             title: toDoInput,
             dueDate: date,
-            tagList: tags,
+            tagList: tags.filter((tag) => checkedTags.includes(tag.id.toString())),
             isComplete: false,
         });
 
