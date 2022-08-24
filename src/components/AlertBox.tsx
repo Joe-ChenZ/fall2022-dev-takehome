@@ -1,24 +1,15 @@
-
-
-const Alert = () => {return (
-
-    <div className="modal">
-        <div className="modal-dialog">
-            <div className="modal-content">
-            <div className="modal-header">
-                <h5 className="modal-title">Modal title</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-            <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
-            </div>
-        </div>
-    </div>
-    
+import Alert from 'react-bootstrap/Alert';
+import { useState } from 'react';
+const AlertBox = () => {
+    const [show, setShow] = useState(true);
+    return (
+        <Alert variant="dark" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+            <p>
+                Change this and that and try again. Duis mollis, est non commodo
+                luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+                Cras mattis consectetur purus sit amet fermentum.
+            </p>
+        </Alert>
 )};
-export default Alert;
+export default AlertBox;

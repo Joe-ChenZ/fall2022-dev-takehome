@@ -1,5 +1,4 @@
 import { MouseEventHandler } from "react";
-
 export type TodoItem = {
     dueDate: string | null,
     tagList: Tag[],
@@ -19,8 +18,8 @@ export type UpdateTodoType = (id: number | null, arg1: TodoItem) => void;
 export interface AddTagType extends MouseEventHandler<HTMLButtonElement> {
     addTag: ((tag: Tag | null) => void) | undefined
 };
-
+ 
 export type Tag = {
-    id: number,
+    id: any,
     tag: string,
 }

@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {RiCloseCircleLine} from 'react-icons/ri';
 import {TiEdit} from 'react-icons/ti';
-import TodoForm from './TodoForm';
 import {TodoItem, CompleteTodoType, RemoveTodoType, UpdateTodoType, Tag} from './TodoTypes';
+import { useGlobalContext } from '../Context';
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     todos: TodoItem[],
     completeTodo: CompleteTodoType, 
     removeTodo: RemoveTodoType, 
-    updateTodo: UpdateTodoType}) => {
+    updateTodo: UpdateTodoType,
+    // checkedTags: number[],
+}) => {
 
     const [edit, setEdit] = useState<{id: number | null, value:string}>({
         id: null, 
         value: ''
     });
+
+    const {checkedTags, setCheckedTags} = useGlobalContext();
 
     const submitUpdate = (value: TodoItem) => {
         updateTodo(edit.id, value);
@@ -32,16 +36,35 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     //         tags={[]}
     //         />
     // }
+    // const checkElements = document.querySelector('.form-check-input:checked').value;
+    // const checkedTags = checkElements?.ariaChecked;
+    todos.map((todo: TodoItem, index: number) => {
+        console.log(todo)
+        todo.tagList.map((tag: Tag) => (
+            console.log(checkedTags.includes(tag.id.toString()))
+        )
+    )})
+    console.log(checkedTags);
     return (
         <>
             {todos.map((todo: TodoItem, index: number) => (
             <>
                 <div className='tag-container'>
-            
+                    
                     {todo.tagList.map((tag: Tag) => (
-                        <div key={tag.id} className='displayed-tag-box'>
-                            {tag.tag}
-                        </div>
+                        <>
+                            { (checkedTags.includes(tag.id.toString())) ? (
+                                
+                                <div key={tag.id} className='displayed-tag-box'>
+                                    {tag.tag}
+                                </div>
+                                ) : (
+                                    <></>
+                                )
+                            }
+                            
+                        </>
+                        
                     ))}
                     
                 </div>
@@ -80,4 +103,3 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
 };
 
 export default Todo;
-// export type {Todo};

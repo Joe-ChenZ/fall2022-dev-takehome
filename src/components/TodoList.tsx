@@ -3,6 +3,11 @@ import TodoForm from './TodoForm';
 import Todo from './Todo';
 import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, Tag} from './TodoTypes';
 
+// export default function TodoList({checkedTags, setSelectedTags}:{
+//   checkedTags: number[];
+//   setSelectedTags: any;
+// }) {
+
 export default function TodoList() {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
@@ -86,6 +91,7 @@ export default function TodoList() {
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         updateTodo={updateTodo}
+        // checkedTags={checkedTags}
         // addTag={}
       />
     </div>

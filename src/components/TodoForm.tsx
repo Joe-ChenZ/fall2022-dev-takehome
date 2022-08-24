@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { AddTodoType, AddTagType, Tag } from './TodoTypes';
-import Alert from './AlertBox';
+import { useGlobalContext } from "../Context";
+// import AlertBox from './AlertBox';
+import Alert from 'react-bootstrap/Alert';
+
 function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
-    tags: Tag[]
+    tags: Tag[],
+    // checkedTags: number[],
+    // setSelectedTags: any,
     addTodo: AddTodoType,
     addTag: any,
     removeTag: any,
@@ -13,7 +18,8 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
     const [toDoInput, setTodoInput] = useState('');
     const [tagInput, setTagInput] = useState('');
     const [date, setDate] = useState<string | undefined>(undefined);
-
+    const [show, setShow] = useState(false);
+    const {checkedTags, setCheckedTags} = useGlobalContext();
     const inputRef = useRef<any>(null);
     
     // useEffect(() => {
@@ -41,11 +47,35 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
         setTagInput('');
     };
 
+    const handleCheckedBoxChange = (e: { target: any; }) => {
+        // Destructuring
+        const { value, checked } = e.target;
+          
+        // console.log(`${value} is ${checked}`);
+         
+        // setSelectedTags([...checkedTags, checked]);
+        // Case 1 : The user checks the box
+        if (checked) {
+            setCheckedTags([...checkedTags, value]);
+        }
+        
+        // Case 2  : The user unchecks the box
+        else {
+            setCheckedTags(
+                [...checkedTags].filter((e) => e !== value)
+            );
+        }
+        
+        
+    };
+    // console.log(checkedTags);
     const handleSubmit = (e: { preventDefault: () => void; }) => {
+        setShow(false);
         e.preventDefault();
-        console.log(date == null);
+        // console.log(date == null);
         if (!date || !(date[0] <= '9' && date[0] >= '0')) {
-            return <Alert/>
+            setShow(true);
+            return;
         }
         addTodo({
             id: Math.floor(Math.random()*10000),  // could use uuid
@@ -57,7 +87,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
 
         setTodoInput('');
         setTagInput('');
-        setDate('mm/dd/yyyy');
+        setDate('');
     };
 
     return (
@@ -122,12 +152,20 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
                 </div>
 
                 <div className='tag-container'>
-                    
+                      
                     {tags.map((tag: Tag) => (
                         <div className='tag-box'>
                             <div key={tag.id}>
                                 {tag.tag}
                             </div>
+
+                            <input 
+                                className='form-check-input' 
+                                type='checkbox' 
+                                key={tag.id + 10000} 
+                                value = {tag.id}
+                                onChange={handleCheckedBoxChange}
+                            />
 
                             <div className="icons">
                                 <RiCloseCircleLine 
@@ -154,6 +192,18 @@ function TodoForm({tags, addTodo, addTag, removeTag, edit}: {
                 <button onClick={handleSubmit} className='todo-button'>
                     Add todo
                 </button>
+
+                {(show) ? (
+                    <Alert className='danger' variant="danger" onClose={() => setShow(false)} dismissible>
+                        <Alert.Heading>Error</Alert.Heading>
+                        <p>
+                            Both the todo title and the due date need to be specified!
+                        </p>
+                    </Alert>
+                    
+                ) : (
+                    <></>
+                )}
             </>
           {/* )} */}
         </form>
