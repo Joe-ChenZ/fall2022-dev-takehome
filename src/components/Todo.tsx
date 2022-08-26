@@ -8,7 +8,6 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     completeTodo: CompleteTodoType, 
     removeTodo: RemoveTodoType, 
     updateTodo: UpdateTodoType,
-    // checkedTags: number[],
 }) => {
 
     const [edit, setEdit] = useState<{id: number | null, value:string}>({

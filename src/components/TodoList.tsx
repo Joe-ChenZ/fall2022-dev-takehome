@@ -9,10 +9,7 @@ import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, 
 // }) {
 
 
-export default function TodoList({value, setValue} : {
-  value: number,
-  setValue: any,
-}) {
+export default function TodoList() {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   const [tags, setTags] = useState<Tag[]>([]);
@@ -64,6 +61,24 @@ export default function TodoList({value, setValue} : {
     console.log("sorted");
   }
 
+  const sortTodoByCompletion = (todos: TodoItem[]) => {
+    todos.sort(function(a: TodoItem, b: TodoItem) {
+        const completeA = a.isComplete;
+        const completeB = b.isComplete;
+        // if (!dateA || !dateB) {
+        //     if (date)
+        // }
+        if (completeA && !completeB) {
+          return -1;
+        }
+        if (!completeA && completeB) {
+          return 1;
+        }
+        return 0;
+    })
+    console.log("sorted");
+  }
+
   // --------------------- tag functions ----------------------
 
   const addTag = (tag: Tag | null) => {
@@ -100,9 +115,8 @@ export default function TodoList({value, setValue} : {
         addTag={addTag}
         removeTag={removeTag}
         sortTodoByDate={sortTodoByDate}
+        sortTodoByCompletion={sortTodoByCompletion}
         todos={todos}
-        value={value}
-        setValue={setValue}
         edit={0}
       />
 

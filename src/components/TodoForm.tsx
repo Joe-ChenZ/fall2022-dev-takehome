@@ -1,20 +1,12 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { AddTodoType, AddTagType, Tag, TodoItem } from './TodoTypes';
 import { useGlobalContext } from "../Context";
 // import AlertBox from './AlertBox';
 import Alert from 'react-bootstrap/Alert';
-function useForceUpdate(){
-    // integer state
-     const [value, setValue] = useState(0);
-    return () => setValue(value => value + 1); // update state to force render
-    // An function that increment 👆🏻 the previous state like here 
-    // is better than directly setting `value + 1`
-}
 
-
-function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, value, setValue, edit}: {
+function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByCompletion, todos, edit}: {
     tags: Tag[],
     // checkedTags: number[],
     // setSelectedTags: any,
@@ -22,9 +14,8 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, valu
     addTag: any,
     removeTag: any,
     sortTodoByDate: any,
+    sortTodoByCompletion: any,
     todos: TodoItem[],
-    value: number,
-    setValue: any,
     edit: any
 }) {
     // const [val, setVal] = useState([]);
@@ -109,15 +100,13 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, valu
 
         if (stateButton === 2) {
             sortTodoByDate(todos);
-            // console.log("sorted");
-            // setCheckedTags(checkedTags);
-            // force rerendering
-            setValue(value + 1);
+            setCheckedTags([...tags]); // force re-render
             
         }
 
         if (stateButton === 3) {
-            ;
+            sortTodoByCompletion(todos);
+            setCheckedTags([...tags]); // force re-render
         }
         
     };
@@ -225,24 +214,11 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, valu
                     />
                 </div>
                 
-                <button 
-                    name="btn1" 
-                    onClick={() => setStateButton(1)} 
-                    className='todo-button'
-                    >
+                <button name="btn1" onClick={() => setStateButton(1)} className='todo-button'>
                     Add todo
                 </button>
 
-                <button 
-                    name="btn2" 
-                    onClick={() => {
-                        // sortTodoByDate(todos)
-                        setStateButton(2);
-                        setValue(value + 1);
-                        console.log(value);
-                    }}
-                    className='todo-button'
-                    >
+                <button name="btn2" onClick={() => { setStateButton(2); }} className='todo-button'>
                     Sort todo by date
                 </button>
 
