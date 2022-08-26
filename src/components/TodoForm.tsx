@@ -1,12 +1,20 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { AddTodoType, AddTagType, Tag, TodoItem } from './TodoTypes';
 import { useGlobalContext } from "../Context";
 // import AlertBox from './AlertBox';
 import Alert from 'react-bootstrap/Alert';
+function useForceUpdate(){
+    // integer state
+     const [value, setValue] = useState(0);
+    return () => setValue(value => value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here 
+    // is better than directly setting `value + 1`
+}
 
-function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit}: {
+
+function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, value, setValue, edit}: {
     tags: Tag[],
     // checkedTags: number[],
     // setSelectedTags: any,
@@ -15,8 +23,11 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit
     removeTag: any,
     sortTodoByDate: any,
     todos: TodoItem[],
+    value: number,
+    setValue: any,
     edit: any
 }) {
+    // const [val, setVal] = useState([]);
     const [toDoInput, setTodoInput] = useState('');
     const [tagInput, setTagInput] = useState('');
     const [date, setDate] = useState<string | undefined>(undefined);
@@ -73,7 +84,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit
     // console.log(checkedTags);
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        console.log(stateButton);
+        console.log("button number :" + stateButton);
         // Add todo
         if (stateButton === 1) {
             setShow(false);
@@ -98,6 +109,11 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit
 
         if (stateButton === 2) {
             sortTodoByDate(todos);
+            // console.log("sorted");
+            // setCheckedTags(checkedTags);
+            // force rerendering
+            setValue(value + 1);
+            
         }
 
         if (stateButton === 3) {
@@ -105,6 +121,10 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit
         }
         
     };
+    // setValue(value + 1);
+    // if (stateButton === 2) {
+        
+    // }
 
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
@@ -205,11 +225,24 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, todos, edit
                     />
                 </div>
                 
-                <button name="btn1" onClick={() => setStateButton(1)} className='todo-button'>
+                <button 
+                    name="btn1" 
+                    onClick={() => setStateButton(1)} 
+                    className='todo-button'
+                    >
                     Add todo
                 </button>
 
-                <button name="btn2" onClick={() => setStateButton(2)} className='todo-button'>
+                <button 
+                    name="btn2" 
+                    onClick={() => {
+                        // sortTodoByDate(todos)
+                        setStateButton(2);
+                        setValue(value + 1);
+                        console.log(value);
+                    }}
+                    className='todo-button'
+                    >
                     Sort todo by date
                 </button>
 

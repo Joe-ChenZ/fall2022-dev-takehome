@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, Tag} from './TodoTypes';
@@ -8,7 +8,11 @@ import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, 
 //   setSelectedTags: any;
 // }) {
 
-export default function TodoList() {
+
+export default function TodoList({value, setValue} : {
+  value: number,
+  setValue: any,
+}) {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   const [tags, setTags] = useState<Tag[]>([]);
@@ -57,6 +61,7 @@ export default function TodoList() {
         // }
         return (dateA < dateB) ? -1 : 1;
     })
+    console.log("sorted");
   }
 
   // --------------------- tag functions ----------------------
@@ -96,6 +101,8 @@ export default function TodoList() {
         removeTag={removeTag}
         sortTodoByDate={sortTodoByDate}
         todos={todos}
+        value={value}
+        setValue={setValue}
         edit={0}
       />
 

@@ -7,11 +7,13 @@ import { useGlobalContext, Context } from './Context';
 // import { Alert, Modal, Button } from 'react-bootstrap';
 function App() {
   const [checkedTags, setCheckedTags] = useState<any[]>([]);
-
+  const [value, setValue] = useState(0);
   return (
     <div className='App'>
       <Context.Provider value={{checkedTags, setCheckedTags}}>
         <TodoList  
+          value={value}
+          setValue={setValue}
           // checkedTags={checkedTags}
           // setSelectedTags={setSelectedTags}
         />
