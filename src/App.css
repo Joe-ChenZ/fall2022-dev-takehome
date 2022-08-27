@@ -118,6 +118,8 @@ h1 {
   margin: 8px;
   padding: 8px;
   margin-left: 32px;
+  border: 4px black;
+  border-width: 4px;
   min-height: 32px;
   width: 150px !important;
 }

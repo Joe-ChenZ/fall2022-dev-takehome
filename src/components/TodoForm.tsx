@@ -61,9 +61,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
         // Destructuring
         const { value, checked } = e.target;
           
-        // console.log(`${value} is ${checked}`);
-         
-        // setSelectedTags([...checkedTags, checked]);
         // Case 1 : The user checks the box
         if (checked) {
             setCheckedTags([...checkedTags, value]);
@@ -157,7 +154,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         onChange={handleChange}
                         name='itemTitle'
                         className='todo-input'
-                        ref={inputRef}
+                        // ref={inputRef}
                     />
 
                 </div>
@@ -170,7 +167,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         value={tagInput}
                         onChange={handleTagChange}
                         className='todo-input'
-                        ref={inputRef}
+                        // ref={inputRef}
                     />
                     <button className='todo-button' onClick={handleTagSubmit}>
                         Create New Tag
