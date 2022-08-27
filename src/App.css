@@ -189,6 +189,7 @@ h1 {
   align-items: center;
   padding-left: 30%;
   width: 70%;
+
 }
 
 .tag-box {
@@ -222,13 +223,6 @@ h1 {
   width: 30%;
   left: 35%;
 }
-
-/* .alert-container {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  align-self: center;
-} */
 
 .icons {
   display: flex;

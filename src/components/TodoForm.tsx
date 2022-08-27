@@ -227,14 +227,13 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
 
                 {(show) ? (
                     // <AlertBox show={show} setShow={setShow}/>
-                    <div className='alert-container'>
-                        <Alert className="alert" variant="danger" onClose={() => setShow(false)} dismissible>
-                            <Alert.Heading>Input Error!</Alert.Heading>
-                            <p>
-                                Both the todo title and due date need to be specified!
-                            </p>
-                        </Alert>
-                    </div>
+                
+                    <Alert className="alert" variant="danger" onClose={() => setShow(false)} dismissible>
+                        <Alert.Heading>Input Error!</Alert.Heading>
+                        <p>
+                            Both the todo title and due date need to be specified!
+                        </p>
+                    </Alert>
                     
                 ) : (
                     <></>
