@@ -1,15 +1,17 @@
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
-const AlertBox = () => {
-    const [show, setShow] = useState(true);
+import { render } from 'react-dom';
+function AlertBox ({show, setShow} : {
+    show: boolean,
+    setShow: any,
+}) {
     return (
-        <Alert variant="dark" onClose={() => setShow(false)} dismissible>
-            <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>Input Error!</Alert.Heading>
             <p>
-                Change this and that and try again. Duis mollis, est non commodo
-                luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-                Cras mattis consectetur purus sit amet fermentum.
+                Both the todo title and due date need to be specified!
             </p>
         </Alert>
-)};
+    )
+};
 export default AlertBox;

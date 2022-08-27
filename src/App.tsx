@@ -7,6 +7,7 @@ import { Context } from './Context';
 // import { Alert, Modal, Button } from 'react-bootstrap';
 function App() {
   const [checkedTags, setCheckedTags] = useState<any[]>([]);
+  
   return (
     <div className='App'>
       <Context.Provider value={{checkedTags, setCheckedTags}}>

@@ -5,6 +5,9 @@ import { AddTodoType, AddTagType, Tag, TodoItem } from './TodoTypes';
 import { useGlobalContext } from "../Context";
 // import AlertBox from './AlertBox';
 import Alert from 'react-bootstrap/Alert';
+import { render } from '@testing-library/react';
+import AlertBox from './AlertBox';
+import FormControl from 'react-bootstrap/esm/FormControl';
 
 function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByCompletion, todos, edit}: {
     tags: Tag[],
@@ -81,7 +84,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
             setShow(false);
         
             // console.log(date == null);
-            if (!date || !(date[0] <= '9' && date[0] >= '0')) {
+            if (!date || !(date[0] <= '9' && date[0] >= '0') || !toDoInput) {
                 setShow(true);
                 return;
             }
@@ -110,10 +113,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
         }
         
     };
-    // setValue(value + 1);
-    // if (stateButton === 2) {
-        
-    // }
 
     return (
         <form onSubmit={handleSubmit} className='todo-form'>
@@ -227,20 +226,24 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                 </button>
 
                 {(show) ? (
-                    <Alert className='danger' variant="danger" onClose={() => setShow(false)} dismissible>
-                        <Alert.Heading>Error</Alert.Heading>
-                        <p>
-                            Both the todo title and the due date need to be specified!
-                        </p>
-                    </Alert>
+                    // <AlertBox show={show} setShow={setShow}/>
+                    <div className='alert-container'>
+                        <Alert className="alert" variant="danger" onClose={() => setShow(false)} dismissible>
+                            <Alert.Heading>Input Error!</Alert.Heading>
+                            <p>
+                                Both the todo title and due date need to be specified!
+                            </p>
+                        </Alert>
+                    </div>
                     
                 ) : (
                     <></>
                 )}
-            </>
-          {/* )} */}
+                </>
+            {/* )} */}
         </form>
       );
 }
 
-export default TodoForm
+export default TodoForm;
+// render(<></>);
