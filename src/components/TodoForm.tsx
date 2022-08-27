@@ -9,7 +9,7 @@ import { render } from '@testing-library/react';
 import AlertBox from './AlertBox';
 import FormControl from 'react-bootstrap/esm/FormControl';
 
-function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByCompletion, todos, edit}: {
+function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByCompletion, todos, forceVal, setForceVal, edit}: {
     tags: Tag[],
     // checkedTags: number[],
     // setSelectedTags: any,
@@ -19,6 +19,8 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
     sortTodoByDate: any,
     sortTodoByCompletion: any,
     todos: TodoItem[],
+    forceVal: number,
+    setForceVal: any,
     edit: any
 }) {
     // const [val, setVal] = useState([]);
@@ -103,15 +105,15 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
 
         if (stateButton === 2) {
             sortTodoByDate(todos);
-            setCheckedTags([...tags]); // force re-render
+            setForceVal(forceVal + 1); // force re-render
             
         }
 
         if (stateButton === 3) {
             sortTodoByCompletion(todos);
-            setCheckedTags([...tags]); // force re-render
+            setForceVal(forceVal + 1); // force re-render
         }
-        
+        // console.log(todos);
     };
 
     return (
@@ -217,7 +219,7 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                     Add todo
                 </button>
 
-                <button name="btn2" onClick={() => { setStateButton(2); }} className='todo-button'>
+                <button name="btn2" onClick={() => setStateButton(2)} className='todo-button'>
                     Sort todo by date
                 </button>
 

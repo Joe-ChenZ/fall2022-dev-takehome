@@ -9,7 +9,10 @@ import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, 
 // }) {
 
 
-export default function TodoList() {
+export default function TodoList({forceVal, setForceVal} : {
+  forceVal: number,
+  setForceVal : any,
+}) {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   const [tags, setTags] = useState<Tag[]>([]);
@@ -117,6 +120,8 @@ export default function TodoList() {
         sortTodoByDate={sortTodoByDate}
         sortTodoByCompletion={sortTodoByCompletion}
         todos={todos}
+        forceVal={forceVal}
+        setForceVal={setForceVal}
         edit={0}
       />
 

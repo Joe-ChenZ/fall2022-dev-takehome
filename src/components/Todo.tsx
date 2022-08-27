@@ -36,14 +36,17 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     //         />
     // }
     
-
-    // todos.map((todo: TodoItem, index: number) => {
-    //     console.log(todo)
-    //     todo.tagList.map((tag: Tag) => (
-    //         console.log(checkedTags.includes(tag.id.toString()))
-    //     )
-    // )})
-    // console.log(checkedTags);
+    todos.map((todo: TodoItem) => {
+        console.log(todo)
+        
+        todo.tagList.map((tag: Tag) => {
+            console.log(checkedTags.includes(tag.id.toString()));
+            console.log(tag.id);
+            return null;
+        })
+        return null;
+    })
+    console.log(checkedTags);
     return (
         <>
             {todos.map((todo: TodoItem, index: number) => (
