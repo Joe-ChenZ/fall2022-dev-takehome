@@ -56,7 +56,6 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
                     {todo.tagList.map((tag: Tag) => (
                         <>
                             { true ? (
-                                
                                 <div key={tag.id} className='displayed-tag-box'>
                                     {tag.tag}
                                 </div>
@@ -79,7 +78,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
                         {todo.title}
                     </div>
 
-                    <div>
+                    <div className='todo-inline'>
                         <span className='todo-due-date-text'> 
                             Due: {todo.dueDate}
                         </span>
