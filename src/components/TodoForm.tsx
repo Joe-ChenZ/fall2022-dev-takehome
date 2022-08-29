@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import { RiCloseCircleLine } from 'react-icons/ri';
-import { AddTodoType, AddTagType, Tag, TodoItem } from './TodoTypes';
+import {TodoItem, AddTodoType, AddTagType, RemoveTagType, Tag} from './TodoTypes';
 import { useGlobalContext } from "../Context";
 // import AlertBox from './AlertBox';
 import Alert from 'react-bootstrap/Alert';
@@ -14,23 +14,21 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
     // checkedTags: number[],
     // setSelectedTags: any,
     addTodo: AddTodoType,
-    addTag: any,
-    removeTag: any,
-    sortTodoByDate: any,
-    sortTodoByCompletion: any,
+    addTag: AddTagType,
+    removeTag: RemoveTagType,
+    sortTodoByDate: (todos: TodoItem[]) => void,
+    sortTodoByCompletion: (todos: TodoItem[]) => void,
     todos: TodoItem[],
     forceVal: number,
-    setForceVal: any,
+    setForceVal: (forceVal: number) => void,
     edit: any
 }) {
-    // const [val, setVal] = useState([]);
     const [toDoInput, setTodoInput] = useState('');
     const [tagInput, setTagInput] = useState('');
     const [date, setDate] = useState<string | undefined>(undefined);
     const [show, setShow] = useState(false);
     const {checkedTags, setCheckedTags} = useGlobalContext();
     const [stateButton, setStateButton] = useState(1);
-    const inputRef = useRef<any>(null);
     
     // useEffect(() => {
     //     if (inputRef.current != null) {
@@ -123,7 +121,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         value={toDoInput}
                         onChange={handleChange}
                         name='title'
-                        ref={inputRef}
                         className='todo-input edit'
                     />
                 </div>
@@ -133,7 +130,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         name='tag'
                         value={tagInput}
                         onChange={handleTagChange}
-                        ref={inputRef}
                         className='todo-input edit'
                     />
                 </div>
@@ -154,7 +150,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         onChange={handleChange}
                         name='itemTitle'
                         className='todo-input'
-                        // ref={inputRef}
                     />
 
                 </div>
@@ -167,7 +162,6 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         value={tagInput}
                         onChange={handleTagChange}
                         className='todo-input'
-                        // ref={inputRef}
                     />
                     <button className='todo-button' onClick={handleTagSubmit}>
                         Create New Tag

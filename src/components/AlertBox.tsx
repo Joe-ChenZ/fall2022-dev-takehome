@@ -1,9 +1,7 @@
 import Alert from 'react-bootstrap/Alert';
-import { useState } from 'react';
-import { render } from 'react-dom';
 function AlertBox ({show, setShow} : {
     show: boolean,
-    setShow: any,
+    setShow: (show: boolean) => void,
 }) {
     return (
         <Alert variant="danger" onClose={() => setShow(false)} dismissible>

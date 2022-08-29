@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import {RiCloseCircleLine} from 'react-icons/ri';
 import {TiEdit} from 'react-icons/ti';
 import {TodoItem, CompleteTodoType, RemoveTodoType, UpdateTodoType, Tag} from './TodoTypes';
-import { useGlobalContext } from '../Context';
 const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
     todos: TodoItem[],
     completeTodo: CompleteTodoType, 
@@ -14,8 +13,6 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo } : {
         id: null, 
         value: ''
     });
-
-    const {checkedTags, setCheckedTags} = useGlobalContext();
 
     const submitUpdate = (value: TodoItem) => {
         updateTodo(edit.id, value);

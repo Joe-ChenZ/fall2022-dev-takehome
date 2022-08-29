@@ -15,10 +15,10 @@ export type RemoveTodoType = (id: number | null) => void;
 
 export type UpdateTodoType = (id: number | null, arg1: TodoItem) => void;
 
-export interface AddTagType extends MouseEventHandler<HTMLButtonElement> {
-    addTag: ((tag: Tag | null) => void) | undefined
-};
+export type AddTagType = (tag: Tag | null) => void
  
+export type RemoveTagType = (id: number | null) => void;
+
 export type Tag = {
     id: any,
     tag: string,

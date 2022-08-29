@@ -1,17 +1,11 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import TodoForm from './TodoForm';
 import Todo from './Todo';
-import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, Tag} from './TodoTypes';
-
-// export default function TodoList({checkedTags, setSelectedTags}:{
-//   checkedTags: number[];
-//   setSelectedTags: any;
-// }) {
-
+import {TodoItem, RemoveTodoType, CompleteTodoType, UpdateTodoType, AddTagType, RemoveTagType, Tag} from './TodoTypes';
 
 export default function TodoList({forceVal, setForceVal} : {
   forceVal: number,
-  setForceVal : any,
+  setForceVal : (forceVal: number) => void,
 }) {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
@@ -84,7 +78,7 @@ export default function TodoList({forceVal, setForceVal} : {
 
   // --------------------- tag functions ----------------------
 
-  const addTag = (tag: Tag | null) => {
+  const addTag: AddTagType = (tag: Tag | null) => {
     if (!tag || /^\s*$/.test(tag.tag)) {
       return;
     }
@@ -93,7 +87,7 @@ export default function TodoList({forceVal, setForceVal} : {
     setTags(newTags);
   }
 
-  const removeTag = (id: number | null) => {
+  const removeTag: RemoveTagType = (id: number | null) => {
     const removeArr = [...tags].filter(tag => tag.id !== id);
     setTags(removeArr);
   };
