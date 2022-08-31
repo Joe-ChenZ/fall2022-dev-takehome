@@ -21,12 +21,13 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
     todos: TodoItem[],
     forceVal: number,
     setForceVal: (forceVal: number) => void,
-    edit: any
+    edit: number
 }) {
     const [toDoInput, setTodoInput] = useState('');
     const [tagInput, setTagInput] = useState('');
     const [date, setDate] = useState<string | undefined>(undefined);
     const [show, setShow] = useState(false);
+    const [field, setField] = useState([]);
     const {checkedTags, setCheckedTags} = useGlobalContext();
     const [stateButton, setStateButton] = useState(1);
     
@@ -205,6 +206,24 @@ function TodoForm({tags, addTodo, addTag, removeTag, sortTodoByDate, sortTodoByC
                         onChange={(e) => setDate(e.target.value)}
                     />
                 </div>
+                {/* <div className='todo-container'>
+                    <label className='todo-label'>Select tags to filter</label>
+                    
+                    <Form.Select 
+                        multiple value={tags.map(function(tag) {return tag.tag})}
+                        className='form-select'
+                        >
+                        {tags.map(tag => (
+                        <option key={tag.id} value={tag.tag}>
+                            {tag.tag}
+                        </option>
+                        ))}
+                    </Form.Select>
+                 
+
+                </div> */}
+                
+                
                 
                 <button name="btn1" onClick={() => setStateButton(1)} className='todo-button'>
                     Add todo
